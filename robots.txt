@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace the placeholder sitemap URL after free hosting is live:
-# Sitemap: https://YOUR-FREE-SITE-URL/sitemap.xml
+Sitemap: https://poornachandrabatthula-create.github.io/aadhya-computer-embroidery/sitemap.xml
