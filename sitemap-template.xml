@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replace YOUR-FREE-SITE-URL with the final free hosting URL before publishing. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://YOUR-FREE-SITE-URL/</loc></url>
+  <url><loc>https://YOUR-FREE-SITE-URL/services.html</loc></url>
+  <url><loc>https://YOUR-FREE-SITE-URL/gallery.html</loc></url>
+  <url><loc>https://YOUR-FREE-SITE-URL/orders.html</loc></url>
+  <url><loc>https://YOUR-FREE-SITE-URL/about.html</loc></url>
+  <url><loc>https://YOUR-FREE-SITE-URL/contact.html</loc></url>
+</urlset>

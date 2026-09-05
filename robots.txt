@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace the placeholder sitemap URL after free hosting is live:
+# Sitemap: https://YOUR-FREE-SITE-URL/sitemap.xml

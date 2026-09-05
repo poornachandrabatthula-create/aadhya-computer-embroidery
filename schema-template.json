@@ -1,0 +1,79 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Aadhya Computer Embroidery Works & Tailor",
+  "description": "Computer Embroidery, Maggam Works, Blouse Stitching, Bridal & Marriage Orders, Kids Embroidery, Logo Embroidery and Saree Services.",
+  "areaServed": "Nizamabad, Telangana, India",
+  "sameAs": [
+    "https://www.instagram.com/aadhya_computer_embroidery_wrk/"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Aadhya Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Computer Embroidery"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Maggam Works"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Blouse Stitching"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Bridal & Marriage Orders"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Kids Embroidery"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Logo Embroidery"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Saree Kuchhulu / Tassels"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Pick & Fall"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Saree Iron"
+        }
+      }
+    ]
+  }
+}
