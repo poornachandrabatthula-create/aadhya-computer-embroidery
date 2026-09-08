@@ -1,0 +1,1 @@
+Aadhya genuine Saree Iron photos go in this folder. Use compressed JPG/WebP images with descriptive filenames.
