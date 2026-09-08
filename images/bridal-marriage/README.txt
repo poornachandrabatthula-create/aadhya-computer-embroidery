@@ -1,0 +1,1 @@
+Aadhya genuine Bridal and Marriage Order photos go in this folder. Use compressed JPG/WebP images with descriptive filenames.
