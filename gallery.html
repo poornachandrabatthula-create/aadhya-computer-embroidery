@@ -1,16 +1,30 @@
 <!doctype html><html lang="te"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Real Aadhya Computer Embroidery • కంప్యూటర్ ఎంబ్రాయిడరీ, Maggam, bridal blouse, marriage, logo and saree work portfolio in Nizamabad.">
+<meta name="description" content="Aadhya Computer Embroidery Works & Tailor, Nizamabad — real work portfolio including computer embroidery, maggam, bridal blouse, blouse stitching, kids embroidery, logo work and saree services.">
 <meta name="theme-color" content="#650f3d"><title>Gallery | AADHYA Real Work Portfolio • మా పనుల గ్యాలరీ</title><link rel="stylesheet" href="assets/style.css">
-</head><body><header><div class="wrap nav"><a class="logo" href="index.html">AADHYA<small>COMPUTER EMBROIDERY • MAGGAM WORKS • TAILOR</small></a>
-<nav><a href="services.html">Services</a><a href="gallery.html">Gallery</a><a href="orders.html">Orders</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
-
-<main><section class="pagehero"><div class="wrap"><div class="eyebrow">Portfolio • మా పనుల గ్యాలరీ</div><h1>మా నిజమైన పనితనం • <span>Real Aadhya Work</span></h1><p>ఈ pageలో stock images కాకుండా Aadhya చేసిన actual workని category-wise showcase చేద్దాం.</p><div class="notice">📌 Final publishing step: Instagram/Google నుంచి verified Aadhya work photosను download చేసి, permission/ownership ఉన్న photos మాత్రమే upload చేయాలి.</div></div></section>
-<section><div class="wrap"><div class="gallery">
-<div class="tile">📸 COMPUTER EMBROIDERY<small>Actual work photo</small></div><div class="tile">📸 MAGGAM WORK<small>Actual work photo</small></div><div class="tile">📸 BRIDAL BLOUSE<small>Actual work photo</small></div><div class="tile">📸 MARRIAGE ORDER<small>Actual work photo</small></div>
-<div class="tile">📸 BLOUSE STITCHING<small>Actual work photo</small></div><div class="tile">📸 KIDS EMBROIDERY<small>Actual work photo</small></div><div class="tile">📸 LOGO WORK<small>Actual work photo</small></div><div class="tile">📸 SAREE KUCHHULU<small>Actual work photo</small></div>
-<div class="tile">📸 PICK & FALL<small>Actual work photo</small></div><div class="tile">📸 SAREE IRON<small>Actual work photo</small></div><div class="tile">📸 MACHINE WORK<small>Actual Aadhya machine photo</small></div><div class="tile">📸 BEFORE / AFTER<small>Actual order story</small></div>
-</div></div></section></main>
+<style>
+.gallery-section{margin:34px 0}.gallery-section h2{margin-bottom:6px}.gallery-section p{margin-top:0}.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.photo-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.08);border:1px solid #eee}.photo-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.photo-card figcaption{padding:10px 12px;font-size:.9rem}.photo-card.missing{min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;box-sizing:border-box}.photo-card.missing small{display:block}.gallery-note{margin:20px 0;padding:14px 16px;border-radius:12px;background:#fff7e8;border:1px solid #efd9a7}
+</style></head><body><header><div class="wrap nav"><a class="logo" href="index.html">AADHYA<small>COMPUTER EMBROIDERY • MAGGAM WORKS • TAILOR</small></a><nav><a href="services.html">Services</a><a href="gallery.html">Gallery</a><a href="orders.html">Orders</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
+<main><section class="pagehero"><div class="wrap"><div class="eyebrow">Portfolio • మా పనుల గ్యాలరీ</div><h1>మా నిజమైన పనితనం • <span>Real Aadhya Work</span></h1><p>Stock images కాకుండా Aadhya చేసిన actual work photosను category-wise showcase చేసే gallery.</p><div class="gallery-note">📌 Photo library integration కోసం category folders సిద్ధంగా ఉన్నాయి. Verified Aadhya work photos మాత్రమే publish చేయాలి.</div></div></section>
+<section><div class="wrap" id="galleryRoot"></div></section></main>
 <footer><div class="wrap"><strong>AADHYA</strong><br>కంప్యూటర్ ఎంబ్రాయిడరీ వర్క్స్ & టైలర్ • Nizamabad, Telangana<br><br>Real work. Custom designs. Professional presentation.</div></footer>
 <div class="sticky"><a href="contact.html">💬 WhatsApp</a><a href="contact.html">📞 Call</a><a href="services.html">🧵 Services</a></div>
-</body></html>
+<script>
+const categories=[
+['computer-embroidery','COMPUTER EMBROIDERY','కంప్యూటర్ ఎంబ్రాయిడరీ'],
+['maggam-works','MAGGAM WORKS','మగ్గం వర్క్స్'],
+['blouse-stitching','BLOUSE STITCHING','బ్లౌజ్ స్టిచింగ్'],
+['bridal-marriage','BRIDAL & MARRIAGE','బ్రైడల్ & మ్యారేజ్ ఆర్డర్స్'],
+['kids-embroidery','KIDS EMBROIDERY','కిడ్స్ ఎంబ్రాయిడరీ'],
+['logo-embroidery','LOGO EMBROIDERY','లోగో ఎంబ్రాయిడరీ'],
+['saree-kuchhulu','SAREE KUCHHULU','చీర కుచ్చులు / టాసెల్స్'],
+['pick-fall','PICK & FALL','పికో & ఫాల్'],
+['saree-iron','SAREE IRON','చీర ఐరన్']
+];
+const root=document.getElementById('galleryRoot');
+categories.forEach(([folder,en,te])=>{
+ const section=document.createElement('section'); section.className='gallery-section';
+ section.innerHTML=`<h2>${en} • ${te}</h2><p>Real Aadhya work</p><div class="photo-grid" data-folder="${folder}"></div>`;
+ root.appendChild(section);
+});
+</script></body></html>
