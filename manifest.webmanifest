@@ -3,7 +3,8 @@
   "short_name": "AADHYA",
   "lang": "te-IN",
   "display": "standalone",
-  "start_url": "/",
+  "start_url": "/aadhya-computer-embroidery/",
+  "scope": "/aadhya-computer-embroidery/",
   "description": "Computer Embroidery, Maggam Works, Bridal, Blouse Stitching, Logo Embroidery and Saree Services in Nizamabad.",
   "theme_color": "#650f3d",
   "background_color": "#fff9f3"
