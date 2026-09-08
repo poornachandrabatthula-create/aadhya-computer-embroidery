@@ -1,0 +1,1 @@
+Aadhya genuine Pick & Fall photos go in this folder. Use compressed JPG/WebP images with descriptive filenames.
