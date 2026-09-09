@@ -2,12 +2,12 @@ AADHYA 90-DAY ₹0 EXECUTION CHECKLIST
 ======================================
 
 WEEK 1
-[ ] Publish website on a free static host
-[ ] Connect Google Search Console
-[ ] Add exact website URL to Google Business Profile
-[ ] Verify phone, address, hours and category
-[ ] Create/organize 9 service categories
-[ ] Select 20 best real Aadhya photos
+[x] Publish website on a free static host — GitHub Pages deployment is active
+[ ] Connect Google Search Console — manual account action still required
+[ ] Add exact website URL to Google Business Profile — manual profile action still required
+[x] Verify phone, address and category used on the website — 8977715939 / 300 Quarters, Nagaram, Nizamabad / Computer Embroidery Works & Tailor
+[x] Create/organize 9 service categories
+[ ] Select 20 best real Aadhya photos — intentionally deferred
 
 WEEK 2-4
 [ ] Upload 10-20 fresh real photos to Google profile
@@ -30,6 +30,16 @@ MONTH 3
 [ ] Add FAQ/content based on real customer questions
 [ ] Build nearby-area content only where Aadhya genuinely serves
 [ ] Compare monthly calls, WhatsApp enquiries, reviews and search impressions
+
+CURRENT WEBSITE WORK COMPLETED
+-------------------------------
+[x] All 9 services linked from Services page to dedicated landing pages
+[x] Dedicated service pages include canonical URLs, robots directives, Open Graph metadata and LocalBusiness schema where applicable
+[x] Mobile sticky WhatsApp / Call / Services CTA retained across service pages
+[x] Sitemap includes all indexable website pages
+[x] robots.txt points to the live sitemap
+[x] Branded 404 page fixed for GitHub Pages subpath asset/navigation handling
+[x] Real-work gallery loads category-wise from the 9 image folders
 
 DO NOT
 [ ] Buy fake reviews
