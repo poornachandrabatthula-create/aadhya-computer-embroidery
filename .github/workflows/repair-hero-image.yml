@@ -1,0 +1,23 @@
+name: Temporary hero image repair
+on:
+  push:
+    branches: [fix-hero-image]
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: "!startsWith(github.event.head_commit.message, 'Repair hero image')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild hero WebP from original PNG
+        run: |
+          convert "assets/ChatGPT Image Sep 15, 2026, 03_48_43 PM.png" -strip -resize 1000x1000\> -quality 82 "assets/hero-aadhya.webp"
+      - name: Commit repaired image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/hero-aadhya.webp
+          git diff --cached --quiet && exit 0
+          git commit -m "Repair hero image"
+          git push
