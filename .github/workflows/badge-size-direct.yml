@@ -1,0 +1,39 @@
+name: Direct badge size fix
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: "!startsWith(github.event.head_commit.message, 'Apply larger proof badges') && !startsWith(github.event.head_commit.message, 'Remove badge size workflow')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add inline badge sizing
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          marker='</head>'
+          css='''<style id="aadhya-proof-badges">.badges{gap:16px!important;margin:30px auto!important;width:min(1100px,92%)!important}.badge{padding:17px 24px!important;border:2px solid #d29b2e!important;border-radius:13px!important;font-family:system-ui,sans-serif!important;font-size:16px!important;line-height:1.35!important;font-weight:900!important;color:#65103f!important;background:linear-gradient(135deg,#fff,#f8dfea,#fff2cf)!important;box-shadow:0 10px 24px rgba(101,16,63,.18)!important}@media(max-width:560px){.badges{gap:10px!important;margin:24px auto!important;width:94%!important}.badge{padding:14px 16px!important;font-size:14px!important}}}</style>'''
+          if 'id="aadhya-proof-badges"' not in s:
+              if marker not in s:
+                  raise SystemExit('head marker not found')
+              s=s.replace(marker,css+marker,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Apply larger proof badges'
+          git push
+      - name: Remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/badge-size-direct.yml
+          git add .github/workflows/badge-size-direct.yml
+          git diff --cached --quiet || git commit -m 'Remove badge size workflow [skip ci]'
+          git push
