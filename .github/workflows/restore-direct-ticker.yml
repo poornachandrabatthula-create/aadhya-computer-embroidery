@@ -1,0 +1,37 @@
+name: Restore direct scrolling ticker
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: "!startsWith(github.event.head_commit.message, 'Restore direct ticker - apply')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply ticker CSS to direct HTML text
+        shell: bash
+        run: |
+          cat >> assets/style.css <<'EOF'
+          /* AADHYA DIRECT TICKER - final */
+          .ribbon{height:58px!important;min-height:58px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;overflow:hidden!important;font-size:0!important;color:transparent!important;line-height:0!important}
+          .ribbon:after{content:none!important;display:none!important}
+          .ribbon-scroll{display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;white-space:nowrap!important;color:#fff!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1!important;font-weight:900!important;letter-spacing:.2px!important;text-shadow:none!important;animation:aadhyaDirectTicker 30s linear infinite!important;will-change:transform!important}
+          @keyframes aadhyaDirectTicker{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+          @media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon-scroll{font-size:17px!important;line-height:1!important}}
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/style.css
+          git diff --cached --quiet && exit 0
+          git commit -m 'Restore direct ticker - apply'
+          git push
+      - name: Remove temporary workflow
+        if: success()
+        shell: bash
+        run: |
+          rm -f .github/workflows/restore-direct-ticker.yml
+          git add .github/workflows/restore-direct-ticker.yml
+          git commit -m 'Remove temporary ticker workflow [skip ci]' || exit 0
+          git push
