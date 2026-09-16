@@ -1,0 +1,32 @@
+name: Hide homepage footer
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  hide-footer:
+    if: "!startsWith(github.event.head_commit.message, 'Hide homepage footer - apply')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hide footer
+        shell: bash
+        run: |
+          cat >> assets/style.css <<'EOF'
+          /* AADHYA: homepage footer hidden */
+          footer{display:none!important}
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/style.css
+          git diff --cached --quiet || git commit -m 'Hide homepage footer - apply'
+          git push
+      - name: Remove temporary workflow
+        if: always()
+        shell: bash
+        run: |
+          rm -f .github/workflows/hide-footer.yml
+          git add .github/workflows/hide-footer.yml
+          git diff --cached --quiet || git commit -m 'Remove temporary footer workflow [skip ci]'
+          git push
