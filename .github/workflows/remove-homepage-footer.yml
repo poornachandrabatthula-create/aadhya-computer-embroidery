@@ -1,0 +1,40 @@
+name: Remove homepage footer
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  remove-footer:
+    if: "!startsWith(github.event.head_commit.message, 'Remove homepage footer - apply')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove footer from homepage
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          ns, n = re.subn(r'<footer>.*?</footer>', '', s, count=1, flags=re.S)
+          if n:
+              p.write_text(ns, encoding='utf-8')
+          else:
+              print('Homepage footer already removed or not found')
+      - name: Commit homepage change
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Remove homepage footer - apply'
+          git push
+      - name: Remove temporary workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/remove-homepage-footer.yml
+          git add .github/workflows/remove-homepage-footer.yml
+          git commit -m 'Remove temporary footer workflow [skip ci]' || exit 0
+          git push
