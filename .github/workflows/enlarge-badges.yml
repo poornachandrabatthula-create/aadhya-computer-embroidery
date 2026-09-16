@@ -1,0 +1,34 @@
+name: Enlarge proof badges
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: "!startsWith(github.event.head_commit.message, 'Apply enlarged badges')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Append badge sizing
+        shell: bash
+        run: |
+          cat >> assets/style.css <<'EOF'
+          /* AADHYA enlarged proof badges */
+          .badges{gap:12px!important;margin:26px auto!important}
+          .badge{padding:15px 20px!important;border-radius:11px!important;font-size:14px!important;line-height:1.3!important;font-weight:900!important;box-shadow:0 8px 20px rgba(101,16,63,.12)!important}
+          @media(max-width:560px){.badges{gap:10px!important}.badge{padding:13px 15px!important;font-size:13px!important}}
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/style.css
+          git diff --cached --quiet && exit 0
+          git commit -m 'Apply enlarged badges'
+          git push
+      - name: Remove temporary workflow
+        if: success()
+        run: |
+          rm -f .github/workflows/enlarge-badges.yml
+          git add .github/workflows/enlarge-badges.yml
+          git commit -m 'Remove temporary badge workflow [skip ci]' || true
+          git push || true
