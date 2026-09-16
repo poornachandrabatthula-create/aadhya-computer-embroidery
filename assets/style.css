@@ -9,3 +9,10 @@
 .ribbon:after{position:relative!important;left:auto!important;top:auto!important;display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1!important;font-weight:1000!important;letter-spacing:.2px!important;color:#fff!important;white-space:pre!important;text-shadow:none!important;transform:translateX(100vw)!important;animation:aadhyaTickerFinal 32s linear infinite!important;will-change:transform!important}
 @keyframes aadhyaTickerFinal{from{transform:translateX(100vw)!important}to{transform:translateX(-100%)!important}}
 @media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon:after{font-size:17px!important;line-height:1!important}}
+
+/* AADHYA DIRECT TICKER */
+.ribbon{position:relative!important;height:58px!important;min-height:58px!important;padding:0!important;background:linear-gradient(90deg,#0b1026,#182b59,#153b4a,#1b2440,#0b1026)!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;font-size:0!important;color:transparent!important;line-height:0!important}
+.ribbon:before,.ribbon:after{content:none!important;display:none!important}
+.ribbon-scroll{display:block!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1!important;font-weight:1000!important;letter-spacing:.2px!important;color:#fff!important;animation:aadhyaDirectTicker 34s linear infinite!important;will-change:transform!important}
+@keyframes aadhyaDirectTicker{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+@media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon-scroll{font-size:17px!important}}
