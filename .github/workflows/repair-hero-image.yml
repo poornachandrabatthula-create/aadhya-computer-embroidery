@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Rebuild hero WebP from original PNG
         run: |
-          convert "assets/ChatGPT Image Sep 15, 2026, 03_48_43 PM.png" -strip -resize 1000x1000\> -quality 82 "assets/hero-aadhya.webp"
+          ffmpeg -y -i "assets/ChatGPT Image Sep 15, 2026, 03_48_43 PM.png" -vf "scale=1000:-2:flags=lanczos" -c:v libwebp -q:v 4 "assets/hero-aadhya.webp"
       - name: Commit repaired image
         run: |
           git config user.name "github-actions[bot]"
