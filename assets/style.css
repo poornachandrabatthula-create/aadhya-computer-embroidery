@@ -22,3 +22,5 @@
 .ribbon-scroll{display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;white-space:nowrap!important;color:#fff!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1!important;font-weight:900!important;letter-spacing:.2px!important;text-shadow:none!important;animation:aadhyaDirectTicker 30s linear infinite!important;will-change:transform!important}
 @keyframes aadhyaDirectTicker{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 @media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon-scroll{font-size:17px!important;line-height:1!important}}
+/* AADHYA: homepage footer hidden */
+footer{display:none!important}
