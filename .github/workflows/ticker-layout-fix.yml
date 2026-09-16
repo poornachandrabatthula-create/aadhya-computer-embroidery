@@ -2,33 +2,36 @@ name: Fix scrolling offer bar layout
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write
+
 jobs:
   fix:
+    if: "!startsWith(github.event.head_commit.message, 'Aadhya final ticker')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fix ticker layout
-        shell: bash
+      - name: Set one clean ticker layout
+        shell: python
         run: |
-          cat >> assets/style.css <<'EOF'
-          /* ticker layout fix */
-          .ribbon{height:64px!important;min-height:64px!important;padding:0 6px!important;display:block!important;overflow:hidden!important}
-          .ribbon:after{top:17px!important;line-height:1.15!important;height:auto!important;max-height:32px!important;white-space:pre!important;overflow:visible!important}
-          @media(max-width:560px){
-            .ribbon{height:54px!important;min-height:54px!important;padding:0!important}
-            .ribbon:after{top:14px!important;font-size:17px!important;line-height:1.15!important;max-height:24px!important}
-          }
-          EOF
+          from pathlib import Path
+          p = Path('assets/style.css')
+          s = p.read_text(encoding='utf-8')
+          block = r'''
+          /* AADHYA FINAL TICKER */
+          .ribbon{position:relative!important;height:58px!important;min-height:58px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;overflow:hidden!important;font-size:0!important;line-height:0!important}
+          .ribbon:after{position:relative!important;left:auto!important;top:auto!important;display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1!important;font-weight:1000!important;letter-spacing:.2px!important;color:#fff!important;white-space:pre!important;text-shadow:none!important;transform:translateX(100vw)!important;animation:aadhyaTickerFinal 32s linear infinite!important;will-change:transform!important}
+          @keyframes aadhyaTickerFinal{from{transform:translateX(100vw)!important}to{transform:translateX(-100%)!important}}
+          @media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon:after{font-size:17px!important;line-height:1!important}}
+          '''
+          if '/* AADHYA FINAL TICKER */' not in s:
+              p.write_text(s + '\n' + block, encoding='utf-8')
+      - name: Commit final ticker fix
+        run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add assets/style.css
-          git commit -m 'Fix scrolling offer bar layout [skip ci]' || exit 0
-          git push
-      - name: Remove temporary workflow
-        if: success()
-        shell: bash
-        run: |
-          rm -f .github/workflows/ticker-layout-fix.yml
-          git add .github/workflows/ticker-layout-fix.yml
-          git commit -m 'Remove temporary ticker fix workflow [skip ci]' || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m 'Aadhya final ticker'
           git push
