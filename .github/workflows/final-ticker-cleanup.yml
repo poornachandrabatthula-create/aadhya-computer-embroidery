@@ -1,0 +1,44 @@
+name: Apply final ticker cleanup
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: "!startsWith(github.event.head_commit.message, 'Final ticker cleanup')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace ticker CSS cleanly
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          p = Path('assets/style.css')
+          s = p.read_text(encoding='utf-8')
+          start = s.index('.ribbon{')
+          end = s.index('.hero{', start)
+          block = '''.ribbon{position:relative;background:linear-gradient(90deg,#07152f,#103b58,#0b6870,#123b55,#07152f);color:transparent;text-align:left;font-family:system-ui,sans-serif;font-weight:800;padding:0!important;height:58px!important;min-height:58px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;overflow:hidden!important;font-size:0!important;line-height:0!important}
+          .ribbon:after{content:"✨ మా దగ్గర COMPUTER EMBROIDERY WORKS STARTING PRICE ₹500/- మాత్రమే ✨          💖 Friends • బయట boutiques లో కట్టించే rate కంటే మా దగ్గర BEST PRICE OFFER మీకోసం 💖          ✨ మా దగ్గర COMPUTER EMBROIDERY WORKS STARTING PRICE ₹500/- మాత్రమే ✨          💖 Friends • బయట boutiques లో కట్టించే rate కంటే మా దగ్గర BEST PRICE OFFER మీకోసం 💖";position:relative!important;left:auto!important;top:auto!important;display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;font-family:system-ui,sans-serif!important;font-size:24px!important;line-height:1.1!important;font-weight:1000!important;letter-spacing:.2px!important;color:#ffffff!important;white-space:pre!important;text-shadow:none!important;transform:translateX(0)!important;animation:aadhyaContinuousTicker 36s linear infinite!important;will-change:transform!important}
+          @keyframes aadhyaContinuousTicker{from{transform:translateX(0)!important}to{transform:translateX(-50%)!important}}
+          '''
+          s = s[:start] + block + s[end:]
+          marker = '@media(max-width:560px){.ribbon{height:48px!important;min-height:48px!important}.ribbon:after{font-size:17px!important;line-height:1.1!important}}
+          s += '\n' + marker + '\n'
+          p.write_text(s, encoding='utf-8')
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/style.css
+          git commit -m 'Final ticker cleanup' || exit 0
+          git push
+      - name: Remove this temporary workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/final-ticker-cleanup.yml
+          git add .github/workflows/final-ticker-cleanup.yml
+          git commit -m 'Remove temporary ticker workflow [skip ci]' || exit 0
+          git push
