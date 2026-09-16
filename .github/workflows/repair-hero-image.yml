@@ -12,7 +12,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Rebuild hero WebP from original PNG
         run: |
-          ffmpeg -y -i "assets/ChatGPT Image Sep 15, 2026, 03_48_43 PM.png" -vf "scale=1000:-2:flags=lanczos" -c:v libwebp -q:v 4 "assets/hero-aadhya.webp"
+          python3 -m pip install --disable-pip-version-check Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          src='assets/ChatGPT Image Sep 15, 2026, 03_48_43 PM.png'
+          out='assets/hero-aadhya.webp'
+          im=Image.open(src).convert('RGB')
+          im.thumbnail((1000,1000), Image.Resampling.LANCZOS)
+          im.save(out,'WEBP',quality=82,method=6)
+          print('saved', im.size)
+          PY
       - name: Commit repaired image
         run: |
           git config user.name "github-actions[bot]"
