@@ -1,0 +1,33 @@
+name: Aadhya SEO Autopilot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: write
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate SEO service pages and sitemap
+        run: python automation/aadhya_seo.py
+
+      - name: Commit automated SEO changes
+        run: |
+          git config user.name "aadhya-seo-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add seo sitemap.xml robots.txt automation-status.json
+          if git diff --cached --quiet; then
+            echo "No SEO changes."
+            exit 0
+          fi
+          git commit -m "chore: refresh Aadhya SEO assets"
+          git push
