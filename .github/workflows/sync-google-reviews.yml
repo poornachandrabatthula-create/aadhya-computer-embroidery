@@ -1,0 +1,35 @@
+name: Sync Google Review Count
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch Google rating and review count
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+        run: |
+          test -n "$GOOGLE_PLACES_API_KEY" || { echo "Missing GOOGLE_PLACES_API_KEY secret"; exit 1; }
+          python3 .github/scripts/sync_google_reviews.py
+
+      - name: Commit website update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No review/rating change."
+            exit 0
+          fi
+          git add index.html
+          git commit -m "chore: sync Google review count and rating"
+          git push
