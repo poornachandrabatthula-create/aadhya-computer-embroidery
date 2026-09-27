@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync-reviews:
@@ -15,21 +16,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch Google rating and review count
+      - name: Check Google Places API secret
+        id: secret
         env:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
         run: |
-          test -n "$GOOGLE_PLACES_API_KEY" || { echo "Missing GOOGLE_PLACES_API_KEY secret"; exit 1; }
-          python3 .github/scripts/sync_google_reviews.py
-
-      - name: Commit website update
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet; then
-            echo "No review/rating change."
-            exit 0
+          if [ -z "$GOOGLE_PLACES_API_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "GOOGLE_PLACES_API_KEY is not configured; skipping review sync without failing the workflow."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
-          git add index.html
-          git commit -m "chore: sync Google review count and rating"
-          git push
+
+      - name: Fetch Google rating and review count
+        if: steps.secret.outputs.configured == 'true'
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+        run: python3 .github/scripts/sync_google_reviews.py
+
+      - name: Create Pull Request for review update
+        if: steps.secret.outputs.configured == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/google-review-sync
+          delete-branch: true
+          title: "chore: sync Google review count and rating"
+          commit-message: "chore: sync Google review count and rating"
+          add-paths: index.html
+          body: |
+            Automated Google review/rating refresh for Aadhya.
+            The PR is created instead of pushing directly to protected main.
