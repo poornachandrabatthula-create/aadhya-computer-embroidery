@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   maintain:
@@ -17,17 +18,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate SEO service pages and sitemap
+      - name: Generate SEO assets, sitemap and gallery manifest
         run: python automation/aadhya_seo.py
 
-      - name: Commit automated SEO changes
-        run: |
-          git config user.name "aadhya-seo-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add seo sitemap.xml robots.txt automation-status.json
-          if git diff --cached --quiet; then
-            echo "No SEO changes."
-            exit 0
-          fi
-          git commit -m "chore: refresh Aadhya SEO assets"
-          git push
+      - name: Create Pull Request for automated maintenance
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/aadhya-seo-maintenance
+          delete-branch: true
+          title: "chore: refresh Aadhya SEO assets"
+          commit-message: "chore: refresh Aadhya SEO assets"
+          add-paths: |
+            sitemap.xml
+            robots.txt
+            gallery-data.json
+            automation-status.json
+          body: |
+            Automated maintenance for Aadhya website SEO assets.
+            This workflow creates a PR instead of pushing directly to protected main.
