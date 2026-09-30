@@ -22,7 +22,7 @@ jobs:
         run: python automation/aadhya_seo.py
 
       - name: Create Pull Request for automated maintenance
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: automation/aadhya-seo-maintenance
